@@ -62,7 +62,10 @@
 
     $ git clone https://github.com/lookTT/ring.git
     $ cd ring
-    $ sh main.sh
+    $ sh main.sh wooyun.org
+
+    建议后台运行，然后去睡觉，一觉醒来会有新发现！
+    $ nohup sh main.sh wooyun.org &
 
 联系我
 --------------
