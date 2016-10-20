@@ -3,9 +3,11 @@
 使用了ring04h的3个工具，之后会持续进行更新
 可直接参考ring04h的github主页 https://github.com/ring04h
 
+我的测试环境为CentOS6.x
+
 必要的工具
 --------------
-Simple as:
+安装方式:
 
     $ yum install -y gcc-c++ libstdc++-devel
     $ yum install -y uuid
@@ -51,6 +53,13 @@ Simple as:
     $ yum install libpcap-devel openssl-devel
     $ make
     $ cp dnsdict6 /usr/bin/
+
+快速开始
+--------------
+例子:
+    $ git clone https://github.com/lookTT/ring.git
+    $ cd ring
+    $ sh main.sh
 
 联系我
 --------------
