@@ -35,7 +35,9 @@
     $ luarocks install luasql-mysql MYSQL_LIBDIR=/usr/lib64/mysql MYSQL_INCDIR=/usr/include/mysql
     $ luarocks install uuid
 
+
     # 建议安装python2.7
+    $ pip install MySQL-python
     $ yum install python-devel libxml2-devel libxslt-devel
     $ pip install lxml beautifulsoup4
 
