@@ -57,6 +57,7 @@
 快速开始
 --------------
 例子:
+
     $ git clone https://github.com/lookTT/ring.git
     $ cd ring
     $ sh main.sh
