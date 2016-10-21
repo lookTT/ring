@@ -16,7 +16,7 @@
 * 动态代理列表配置（支持TOR）
 * HTTP头自定义
 
-更多使用详情参照 [/config.py](https://github.com/ring04h/weakfilescan/blob/master/config.py)
+更多使用详情参照 [/config.py](https://github.com/lookTT/ring/blob/master/weakfilescan/config.py)
 
 # 快速开始
 ``` shell
