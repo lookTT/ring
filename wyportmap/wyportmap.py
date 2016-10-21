@@ -12,7 +12,7 @@ from libnmap.plugins.backendpluginFactory import BackendPluginFactory
 
 # 重试次数 & 超时时间(s)
 retrycnt = 3
-timeout = 60
+timeout = 300
 
 # 数据库连接 & 全局扫描参数
 global_dbcoon = 'mysql+mysqldb://root:root@192.168.138.131:3306/test'
