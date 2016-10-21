@@ -18,6 +18,7 @@ def wyportmap_transfer(taskid, filepath=None):
 
     # 打开数据库连接
     db = MySQLdb.connect(host=dbHost,user=dbUser,passwd=dbPassWd,db=dbDataBase,charset=dbCharset)
+    cursor = db.cursor()
     sql = "SELECT `ip` FROM pdomain WHERE taskid='%s'" % (taskid)
 
     dictIP = {}
