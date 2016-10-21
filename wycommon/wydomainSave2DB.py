@@ -24,10 +24,9 @@ def wydomain_save2db(domain_uuid, para_domain, wydomains):
 
     # 打开数据库连接
     db = MySQLdb.connect(host=dbHost,user=dbUser,passwd=dbPassWd,db=dbDataBase,charset=dbCharset)
+    # 使用cursor()方法获取操作游标 
+    cursor = db.cursor()
     for k in wydomains['domain']:
-
-        # 使用cursor()方法获取操作游标 
-        cursor = db.cursor()
         query = "INSERT INTO domain (`taskid`, `domain`, `time`) VALUES ('%s','%s', NOW())" % (domain_uuid, k)
         try:
            # 执行sql语句
