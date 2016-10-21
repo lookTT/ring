@@ -11,7 +11,7 @@ uuid=`uuid`
 #生成时间
 curDate=`date +%Y-%m-%d_%H_%M_%S`
 #创建文件夹
-dirpath='/tmp/'$curDate'___'$uuid'/'
+dirpath='/tmp/'$1'__'$curDate'___'$uuid'/'
 mkdir $dirpath
 #生成文件的绝对路径以及文件名
 filename='wydomain.txt'
