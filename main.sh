@@ -58,4 +58,8 @@ filefullpath=$dirpath$filename
 echo "weakfilescan.txt fullpath:"$filefullpath
 python wyspider.py $1 $filefullpath
 
+echo "start to execute wycommon/wyweakfilescanSave2DB.py script"
+cd ../wycommon
+python wyweakfilescanSave2DB.py $uuid $filefullpath
+
 echo "Done"
