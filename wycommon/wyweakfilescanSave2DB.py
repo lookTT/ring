@@ -58,5 +58,5 @@ if __name__ == "__main__":
         wyweakfilescan_save2db(sys.argv[1], eval(result))
         sys.exit(0)
     else:
-        print ("usage: %s weakfilescan" % sys.argv[0])
+        print ("usage: %s wyweakfilescan_save2db" % sys.argv[0])
         sys.exit(-1)

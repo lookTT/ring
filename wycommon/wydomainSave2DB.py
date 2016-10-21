@@ -93,5 +93,5 @@ if __name__ == "__main__":
         wydomain_save2db(sys.argv[1], sys.argv[2], eval(result))
         sys.exit(0)
     else:
-        print ("usage: %s domain" % sys.argv[0])
+        print ("usage: %s wydomain_save2db" % sys.argv[0])
         sys.exit(-1)
