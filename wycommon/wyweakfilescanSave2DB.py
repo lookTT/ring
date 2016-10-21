@@ -22,9 +22,9 @@ def wyweakfilescan_save2db(taskid, result):
     # 使用cursor()方法获取操作游标 
     cursor = db.cursor()
 
-    for subdomain in result['dir']:
-      for url in result['dir'][subdomain]:
-        query = "INSERT INTO domain (`taskid`, `tag`, `subdomain`, `name`, `url`) VALUES ('%s', 'dirs', '%s', '', '%s'" % (taskid, subdomain, url)
+    for subdomain in result['dirs']:
+      for url in result['dirs'][subdomain]:
+        query = "INSERT INTO weakfilescan (`taskid`, `tag`, `subdomain`, `name`, `url`) VALUES ('%s', 'dirs', '%s', '', '%s')" % (taskid, subdomain, url)
         try:
            # 执行sql语句
            cursor.execute(query)
@@ -37,7 +37,7 @@ def wyweakfilescan_save2db(taskid, result):
     for subdomain in result['files']:
       for name in result['files'][subdomain]:
         for url in result['files'][subdomain][name]:
-          query = "INSERT INTO domain (`taskid`, `tag`, `subdomain`, `name`, `url`) VALUES ('%s', 'dirs', '%s', '%s', '%s'" % (taskid, subdomain, name, url)
+          query = "INSERT INTO weakfilescan (`taskid`, `tag`, `subdomain`, `name`, `url`) VALUES ('%s', 'dirs', '%s', '%s', '%s')" % (taskid, subdomain, name, url)
           try:
              # 执行sql语句
              cursor.execute(query)
@@ -58,5 +58,5 @@ if __name__ == "__main__":
         wyweakfilescan_save2db(sys.argv[1], eval(result))
         sys.exit(0)
     else:
-        print ("usage: %s domain" % sys.argv[0])
+        print ("usage: %s weakfilescan" % sys.argv[0])
         sys.exit(-1)
