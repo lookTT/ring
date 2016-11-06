@@ -37,8 +37,8 @@
 
 
     # 建议安装python2.7
+    $ yum install -y python-devel libxml2-devel libxslt-devel
     $ pip install MySQL-python
-    $ yum install python-devel libxml2-devel libxslt-devel
     $ pip install lxml beautifulsoup4
 
     $ sudo rpm -vhU https://nmap.org/dist/nmap-6.47-1.x86_64.rpm
