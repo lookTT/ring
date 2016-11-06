@@ -133,7 +133,7 @@ if __name__ == "__main__":
           "chaxunla.json",
           "dnsburte.json",
           "googlect_dnsnames.json",
-          "googlect_subject.json",
+          #"googlect_subject.json",
           "ilinks.json",
           "netcraft.json",
           "sitedossier.json",

@@ -58,17 +58,17 @@ python wydomainSave2DB.py $uuid $domain $filefullpath
 #     nohup python wyportmap.py $myline $uuid > $dirpath"_wyportmap__"$myline".txt"  2>&1 &
 # done
 
-# echo "start to execute weakfilescan/wyspider.py script"
-# cd ../weakfilescan
-# #敏感信息泄露检测工具
-# #生成文件的绝对路径以及文件名
-# filename='weakfilescan.txt'
-# filefullpath=$dirpath$filename
-# echo "weakfilescan.txt fullpath:"$filefullpath
-# python wyspider.py $domain $filefullpath
+echo "start to execute weakfilescan/wyspider.py script"
+cd ../weakfilescan
+#敏感信息泄露检测工具
+#生成文件的绝对路径以及文件名
+filename='weakfilescan.txt'
+filefullpath=$dirpath$filename
+echo "weakfilescan.txt fullpath:"$filefullpath
+python wyspider.py $domain $filefullpath
 
-# echo "start to execute wycommon/wyweakfilescanSave2DB.py script"
-# cd ../wycommon
-# python wyweakfilescanSave2DB.py $uuid $filefullpath
+echo "start to execute wycommon/wyweakfilescanSave2DB.py script"
+cd ../wycommon
+python wyweakfilescanSave2DB.py $uuid $filefullpath
 
 echo "Done"
