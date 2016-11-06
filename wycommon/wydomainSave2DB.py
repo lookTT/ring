@@ -6,10 +6,10 @@ import MySQLdb
 import uuid
 
 # 动态配置项
-dbHost      = "192.168.138.131"
+dbHost      = "127.0.0.1"
 dbUser      = "root"
-dbPassWd    = "root"
-dbDataBase  = "test"
+dbPassWd    = ""
+dbDataBase  = "ring"
 dbCharset   = "utf8"
 
 def wydomain_save2db(domain_uuid, para_domain, wydomains):
@@ -82,16 +82,79 @@ def wydomain_save2db(domain_uuid, para_domain, wydomains):
                # 返回错误消息
                db.rollback()
 
+    db.close()
+
+def getAllSubDomain(allSubDomain, subdomains):
+  for x in subdomains:
+    allSubDomain[x] = x
+
+def wydomain_save2db2(taskid, para_domain, subdomains):
+    taskid = str(taskid)
+    para_domain = str(para_domain)
+
+    # 打开数据库连接
+    db = MySQLdb.connect(host=dbHost,user=dbUser,passwd=dbPassWd,db=dbDataBase,charset=dbCharset)
+    # 使用cursor()方法获取操作游标 
+    cursor = db.cursor()
+    # 记录domain表
+    query = "INSERT INTO domain (`taskid`, `domain`, `time`) VALUES ('%s','%s', NOW())" % (taskid, para_domain)
+    try:
+        # 执行sql语句
+        cursor.execute(query)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 返回错误消息
+        db.rollback()
+
+
+    # 逐条记录二级域名
+    for x in subdomains:
+        
+        query = "INSERT INTO pdomain (`taskid`, `subdomain`) VALUES ('%s','%s')" % (taskid, x)
+        try:
+            # 执行sql语句
+            cursor.execute(query)
+            # 提交到数据库执行
+            db.commit()
+        except:
+            # 返回错误消息
+            db.rollback()
+
+
+    db.close()
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 4:
-        # 打开文件
-        fo = open(str(sys.argv[3]))
-        result = fo.read();
-        # 关闭打开的文件
-        fo.close()
-        wydomain_save2db(sys.argv[1], sys.argv[2], eval(result))
+        allfiles = [
+          "alexa.json",
+          "baidu.json",
+          "chaxunla.json",
+          "dnsburte.json",
+          "googlect_dnsnames.json",
+          "googlect_subject.json",
+          "ilinks.json",
+          "netcraft.json",
+          "sitedossier.json",
+          "threatcrowd.json",
+          "threatminer.json"
+        ]
+
+        allSubDomain = {}
+
+        for name in allfiles:
+          fullPath = sys.argv[3] + name
+          # 打开文件
+          fo = open(str(fullPath))
+          result = fo.read();
+          # 关闭打开的文件
+          fo.close()
+          getAllSubDomain(allSubDomain, eval(result))
+
+        wydomain_save2db2(sys.argv[1], sys.argv[2], allSubDomain)
+        
         sys.exit(0)
     else:
-        print ("usage: %s wydomain_save2db" % sys.argv[0])
+        print ("usage: %s wydomain_save2db2" % sys.argv[0])
         sys.exit(-1)
