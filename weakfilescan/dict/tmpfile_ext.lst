@@ -7,4 +7,4 @@
 .swp
 .tmp
 !
-.{re=exrex:201[0-5]}$
+.{re=exrex:201[0-9]}$

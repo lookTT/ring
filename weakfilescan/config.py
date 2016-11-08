@@ -15,7 +15,7 @@ tempfile_ext_dict = './dict/tmpfile_ext.lst'
 # 1 = 和域名全称相关: 包含 job.wooyun.org
 # 2 = 和主域名相关: 包含 wooyun.org
 # 3 = 和域名的名字相关: 包含 wooyun
-basedomain = 2
+basedomain = 3
 
 # 判断文件或目录存在的状态码，多个以逗号隔开
 # exclude_status = [200,403]
