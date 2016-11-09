@@ -1,20 +1,20 @@
 #!/bin/bash
 
-echo "$$">>pid.txt
-
 #获取参数
 domain=
-uuid=
+infile=
+uuid=`uuid`
 
 #判断参数个数是否正确
-if [[ $# -eq 1 ]]; then
+if [[ $# -eq 2 ]]; then
     domain=$1
-    uuid=`uuid`
-elif [[ $# -eq 2 ]]; then
+    infile=$2
+elif [[ $#  -eq 3 ]]; then
     domain=$1
-    uuid=$2
+    infile=$2
+    uuid=$3
 else
-    echo "bad aparameterrg num: expect 1 get $#"
+    echo "bad aparameterrg num: expect 2or3 get $#"
     exit
 fi
 
@@ -39,4 +39,11 @@ echo "start to execute wycommon/wyweakfilescanSave2DB.py script"
 cd ../wycommon
 python wyweakfilescanSave2DB.py $uuid $filefullpath
 
-echo "Done"
+filename='brutesearching.txt'
+filefullpath=$dirpath$filename
+
+echo "start to execute weakfilescan/brutesearching.py script"
+cd ../weakfilescan
+python brutesearching.py -d $domain -i $infile -o $filefullpath -t $uuid
+
+echo "__weakfilescanMP Done"

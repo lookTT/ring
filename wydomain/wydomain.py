@@ -34,6 +34,8 @@ def run(args):
         print('usage: wydomain.py -d aliyun.com')
         sys.exit(1)
 
+    domain = domain.replace(' ', '').replace('\r', '').replace('\n', '')
+
     # init _cache_path
     _cache_path = os.path.join(os.path.dirname(__file__), 'result/{0}'.format(domain))
     if not os.path.exists(_cache_path):

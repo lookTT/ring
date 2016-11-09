@@ -40,6 +40,8 @@
     $ pip install lxml beautifulsoup4
     $ pip install dnspython
     $ pip install requests
+    $ pip install threadpool
+    $ pip install uuid
 
     $ sudo rpm -vhU https://nmap.org/dist/nmap-7.31-1.x86_64.rpm
 

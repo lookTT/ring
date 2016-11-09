@@ -16,6 +16,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 def start_wyspider(siteurl): # 启动爬虫和fuzz类
+	siteurl = siteurl.replace(' ', '').replace('\r', '').replace('\n', '')
 	# 目标赋值
 	if "://" not in siteurl:
 		siteurl = 'http://%s' % siteurl.rstrip('/')
