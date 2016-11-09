@@ -6,10 +6,10 @@ import MySQLdb
 import uuid
 
 # 动态配置项
-dbHost      = "192.168.138.131"
+dbHost      = "127.0.0.1"
 dbUser      = "root"
-dbPassWd    = "root"
-dbDataBase  = "test"
+dbPassWd    = ""
+dbDataBase  = "ring"
 dbCharset   = "utf8"
 
 def wyweakfilescan_save2db(taskid, result):

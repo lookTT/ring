@@ -6,10 +6,10 @@ import sys
 import MySQLdb
 
 # 动态配置项
-dbHost      = "192.168.138.131"
+dbHost      = "127.0.0.1"
 dbUser      = "root"
-dbPassWd    = "root"
-dbDataBase  = "test"
+dbPassWd    = ""
+dbDataBase  = "ring"
 dbCharset   = "utf8"
 
 def wyportmap_transfer(taskid, filepath=None):  

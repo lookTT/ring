@@ -66,7 +66,13 @@
 
     建议后台运行，然后去睡觉，一觉醒来会有新发现！
     $ nohup sh main.sh wooyun.org > wooyun.org.out 2>&1 &
+    查看输出日志
+    tail -f wooyun.org.out
 
+    可单独跑弱文件扫描
+    $ sh __weakfilescanBatchMT.sh domain.txt infile.txt
+    查看弱文件输出日志
+    tail -f log_weakfilescanMT.out
 联系我
 --------------
 Email:zltdhr@gmail.com
