@@ -1,0 +1,3 @@
+tieba.baidu.com
+site.baidu.com
+news.baidu.com

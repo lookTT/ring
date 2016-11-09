@@ -22,7 +22,7 @@ mkdir $dirpath
 echo "start to execute wydomain script"
 cd wydomain
 # 执行穷举
-python dnsburte.py -d $domain -f default.csv -o $domain'.dnsburte.log'
+python dnsburte.py -d $domain -f wydomain.csv -o $domain'.dnsburte.log'
 # 执行API查询目标的子域名
 python wydomain.py -d $domain -o $domain'.wydomain.log'
 # 执行baidu查询目标的字域名
@@ -58,17 +58,22 @@ python wydomainSave2DB.py $uuid $domain $filefullpath
 #     nohup python wyportmap.py $myline $uuid > $dirpath"_wyportmap__"$myline".txt"  2>&1 &
 # done
 
-echo "start to execute weakfilescan/wyspider.py script"
-cd ../weakfilescan
-#敏感信息泄露检测工具
-#生成文件的绝对路径以及文件名
-filename='weakfilescan.txt'
-filefullpath=$dirpath$filename
-echo "weakfilescan.txt fullpath:"$filefullpath
-python wyspider.py $domain $filefullpath
+# #敏感文件检测
+# echo "start to execute weakfilescan/wyspider.py script"
+# cd ../weakfilescan
+# #敏感信息泄露检测工具
+# #生成文件的绝对路径以及文件名
+# filename='weakfilescan.txt'
+# filefullpath=$dirpath$filename
+# echo "weakfilescan.txt fullpath:"$filefullpath
+# python wyspider.py $domain $filefullpath
 
-echo "start to execute wycommon/wyweakfilescanSave2DB.py script"
-cd ../wycommon
-python wyweakfilescanSave2DB.py $uuid $filefullpath
+# echo "start to execute wycommon/wyweakfilescanSave2DB.py script"
+# cd ../wycommon
+# python wyweakfilescanSave2DB.py $uuid $filefullpath
+
+#敏感文件检测
+cd ../
+sh __weakfilescanBatchMT.sh domain.txt infile.txt
 
 echo "Done"
