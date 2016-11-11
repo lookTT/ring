@@ -13,6 +13,8 @@ import MySQLdb
 import urllib2
 import argparse
 import threadpool
+from DBUtils.PooledDB import PooledDB
+
 
 # 动态配置项
 dbHost      = "127.0.0.1"
@@ -20,6 +22,12 @@ dbUser      = "root"
 dbPassWd    = ""
 dbDataBase  = "ring"
 dbCharset   = "utf8"
+
+#线程数
+poolCount = 16
+
+#mysql连接池
+dbpool = PooledDB(MySQLdb,poolCount,host=dbHost,user=dbUser,passwd=dbPassWd,db=dbDataBase,charset=dbCharset,port=3306)
 
 # 随机HTTP头
 USER_AGENTS = [
@@ -60,7 +68,7 @@ def is_legal(request):
     if request.getcode() == 200 or request.getcode() == 403:
         #判断文件内容
         keyWords = [
-            "抱歉", "对不起", "无法打开", "稍后再试", "联系客服", "error", "page-error", "您请求的页面", "404", "Error?", "error?"
+            "抱歉", "对不起", "无法打开", "稍后再试", "联系客服", "error", "page-error", "您请求的页面", "404", "Error?", "error?", "icon_404", "404bg", "icon icon_404", ".404bg", ".icon404"
         ]
         ss = request.read()
         count = 0
@@ -69,7 +77,7 @@ def is_legal(request):
                 count = count + 1
 
         count = count*1.0
-        if count/len(keyWords) >= 0.6:
+        if count/len(keyWords) >= 0.2:
             # 估计是404地址
             return False
     else:
@@ -92,14 +100,14 @@ def run(args):
     print taskid
 
     # 读取传入文件
-    url = []
+    urllist = []
     fo = open(str(infile))
     while 1:
         line = fo.readline()
         if not line:
             break
         line = line.replace(' ', '').replace('\r', '').replace('\n', '')
-        url.append(domain+line)
+        urllist.append(domain+line)
     fo.close()
 
     # 检测出符合条件的
@@ -117,7 +125,20 @@ def run(args):
         try:
             o = urllib2.urlopen(req)
             if is_legal(o):
-                # 检查
+                # 检查成功
+                db = dbpool.connection() #获取链接
+                cur = db.cursor() #获取游标
+                url = url.replace("'", "\\'")
+                query = "INSERT INTO weakfilescan (`taskid`, `subdomain`, `url`, `time`) VALUES ('%s','%s','%s',NOW())" % (taskid, domain, url)
+                try: 
+                    cur.execute(query) #执行语句
+                    db.commit()
+                    cur.close() #
+                    db.close() #
+                except MySQLdb.Error, e:
+                    print "Error:%s" % str(e)
+                    print query
+
                 out.append(url)
                 print "[%s]%s" % (o.getcode(), url)
             else:
@@ -126,12 +147,14 @@ def run(args):
 
         except urllib2.HTTPError as e:
             print "[%s]%s" % (e.code, url)
+
         
     #使用多线程执行
-    pool = threadpool.ThreadPool(16)
-    requests = threadpool.makeRequests(collect, url)
+    pool = threadpool.ThreadPool(poolCount)
+    requests = threadpool.makeRequests(collect, urllist)
     [pool.putRequest(req) for req in requests]  
     pool.wait()
+    pool.dismissWorkers(poolCount, do_join=True)
 
     #写文件
     fo = open(outfile, "wb")
@@ -140,21 +163,21 @@ def run(args):
 
     # 将内容写入数据库
     # 打开数据库连接
-    db = MySQLdb.connect(host=dbHost,user=dbUser,passwd=dbPassWd,db=dbDataBase,charset=dbCharset)
-    # 使用cursor()方法获取操作游标 
-    cursor = db.cursor()
-    for k in out:
-        query = "INSERT INTO weakfilescan (`taskid`, `subdomain`, `url`) VALUES ('%s','%s','%s')" % (taskid, domain, k)
-        try:
-           # 执行sql语句
-           cursor.execute(query)
-           # 提交到数据库执行
-           db.commit()
-        except:
-           # 返回错误消息
-           db.rollback()
+    # db = MySQLdb.connect(host=dbHost,user=dbUser,passwd=dbPassWd,db=dbDataBase,charset=dbCharset)
+    # # 使用cursor()方法获取操作游标 
+    # cursor = db.cursor()
+    # for k in out:
+    #     query = "INSERT INTO weakfilescan (`taskid`, `subdomain`, `url`) VALUES ('%s','%s','%s')" % (taskid, domain, k)
+    #     try:
+    #        # 执行sql语句
+    #        cursor.execute(query)
+    #        # 提交到数据库执行
+    #        db.commit()
+    #     except:
+    #        # 返回错误消息
+    #        db.rollback()
 
-    db.close()
+    # db.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="brutesearching v 0.1 to collect weak files path.")

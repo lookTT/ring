@@ -22,9 +22,9 @@ mkdir $dirpath
 echo "start to execute wydomain script"
 cd wydomain
 # 执行穷举
-python dnsburte.py -d $domain -f wydomain.csv -o $domain'.dnsburte.log'
+python dnsburte.py -d $domain -f wydomain.csv -o $domain'.dnsburte.out'
 # 执行API查询目标的子域名
-python wydomain.py -d $domain -o $domain'.wydomain.log'
+python wydomain.py -d $domain -o $domain'.wydomain.out'
 # 执行baidu查询目标的字域名
 luajit baiduSubDomain.lua $domain
 
