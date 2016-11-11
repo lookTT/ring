@@ -41,6 +41,7 @@
     $ pip install dnspython
     $ pip install requests
     $ pip install threadpool
+    ¥ pip install DBUtils
     $ pip install uuid
 
     $ sudo rpm -vhU https://nmap.org/dist/nmap-7.31-1.x86_64.rpm
@@ -70,7 +71,7 @@
     tail -f wooyun.org.out
 
     可单独跑弱文件扫描
-    $ sh __weakfilescanBatchMT.sh domain.txt infile.txt
+    $ sh __weakfilescanBatchMT.sh domain.txt infile.txt a.out
     查看弱文件输出日志
     tail -f log_weakfilescanMT.out
 联系我
