@@ -148,6 +148,10 @@ def run(args):
         except urllib2.HTTPError as e:
             print "[%s]%s" % (e.code, url)
 
+        except Exception,e:
+            print "Request:%s" % url
+            print Exception,":",e
+
         
     #使用多线程执行
     pool = threadpool.ThreadPool(poolCount)
