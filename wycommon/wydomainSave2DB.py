@@ -3,7 +3,7 @@
 
 import sys
 import MySQLdb
-import uuid
+import socket
 
 # 动态配置项
 dbHost      = "127.0.0.1"
@@ -110,8 +110,8 @@ def wydomain_save2db2(taskid, para_domain, subdomains):
 
     # 逐条记录二级域名
     for x in subdomains:
-        
-        query = "INSERT INTO pdomain (`taskid`, `subdomain`) VALUES ('%s','%s')" % (taskid, x)
+        ip = socket.gethostbyname(x)
+        query = "INSERT INTO pdomain (`taskid`, `subdomain`, `ip`) VALUES ('%s','%s')" % (taskid, x, ip)
         try:
             # 执行sql语句
             cursor.execute(query)
