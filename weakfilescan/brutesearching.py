@@ -14,7 +14,7 @@ import urllib2
 import argparse
 import threadpool
 from DBUtils.PooledDB import PooledDB
-
+from urllib import quote
 
 # 动态配置项
 dbHost      = "127.0.0.1"
@@ -107,7 +107,7 @@ def run(args):
         if not line:
             break
         line = line.replace(' ', '').replace('\r', '').replace('\n', '')
-        urllist.append(domain+line)
+        urllist.append(domain+quote(line))
     fo.close()
 
     # 检测出符合条件的
